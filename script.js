@@ -11,7 +11,8 @@ const subcategorias = {
     ],
     'Electrónica': [
         { nombre: 'Parlantes', slug: 'Parlante', foto: 'fotos/parlantes.jpg' },
-        { nombre: 'Auriculares', slug: 'Auricular', foto: 'fotos/auriculares.jpg' }
+        { nombre: 'Auriculares', slug: 'Auricular', foto: 'fotos/auriculares.jpg' },
+        { nombre: 'Humidificadores', slug: 'Humidificador', foto: 'fotos/humidificadores.jpg' } // <-- Agrega esta línea
     ],
     'Juguetes': [
         { nombre: 'Bebés', slug: '6 meses', foto: 'fotos/bebes.jpg' },
@@ -191,10 +192,23 @@ function filtrarPorSubcategoria(catPadre, slug, nombreSub) {
 function configurarCarrusel() {
     const sliderBox = document.getElementById('slider-box');
     const destacados = productosBase.filter(p => p.etiqueta.toLowerCase().includes('carrusel'));
+    
     if (destacados.length === 0) return;
+
+    // Insertamos las fotos en el carrusel
     sliderBox.innerHTML = destacados.map(p => `
         <div class="slide" style="background-image: url('${obtenerUrlsFotos(p.foto)[0]}')"></div>
     `).join('');
+
+    // Lógica para ocultar/mostrar flechas
+    const botonesNav = document.querySelectorAll('.btn-nav-slider');
+    if (destacados.length <= 1) {
+        // Si hay 1 o 0 fotos, ocultamos las flechas
+        botonesNav.forEach(boton => boton.style.display = 'none');
+    } else {
+        // Si hay más de una, nos aseguramos de que se vean
+        botonesNav.forEach(boton => boton.style.display = 'block');
+    }
 }
 
 function moveSlide(step) {
@@ -253,6 +267,18 @@ window.abrirModal = function(indexProducto, indexFoto) {
 
     document.getElementById('modal-imagen').style.display = 'flex';
     document.getElementById('img-ampliada').src = fotosModalActuales[indiceModalActual];
+
+    // Lógica para ocultar flechas si es una sola foto
+    const btnPrev = document.getElementById('modal-prev');
+    const btnNext = document.getElementById('modal-next');
+
+    if (fotosModalActuales.length <= 1) {
+        btnPrev.style.display = 'none';
+        btnNext.style.display = 'none';
+    } else {
+        btnPrev.style.display = 'block';
+        btnNext.style.display = 'block';
+    }
 };
 
 window.cerrarModal = function() {
