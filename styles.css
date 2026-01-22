@@ -1,0 +1,154 @@
+:root { --naranja: #ff8c00; --naranja-claro: #ffae42; --crema: #fffdfa; --texto: #2d3436; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Fredoka', sans-serif; }
+body { background-color: var(--crema); color: var(--texto); }
+
+header { background: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+.top-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 5%; max-width: 1200px; margin: 0 auto; gap: 20px; }
+.main-logo { height: 55px; width: 55px; border-radius: 50%; border: 2px solid var(--naranja); object-fit: cover; }
+.brand-title { background: linear-gradient(45deg, var(--naranja), var(--naranja-claro)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 26px; font-weight: 700; text-decoration: none; }
+
+.search-container { flex: 1; max-width: 400px; }
+.search-box { position: relative; display: flex; align-items: center; background: #f8f9fa; border: 2px solid #eee; border-radius: 25px; padding: 5px 15px; }
+.search-icon { color: #888; margin-right: 10px; }
+#input-buscador { border: none; background: transparent; outline: none; width: 100%; padding: 8px 0; font-size: 0.9rem; }
+
+.nav-menu ul { list-style: none; display: flex; justify-content: center; gap: 30px; border-top: 1px solid #eee; padding: 10px 0; }
+.nav-menu ul li a { text-decoration: none; color: #444; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; }
+.nav-menu a.active { color: var(--naranja); }
+
+/* PRODUCTOS Y MINICARRUSEL */
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 20px 5%; }
+.product-card { background: white; border-radius: 20px; padding: 15px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; position: relative; }
+.product-image-container { position: relative; width: 100%; height: 220px; overflow: hidden; border-radius: 15px; margin-bottom: 10px; background: #f9f9f9; }
+
+/* ARREGLO FOTOS EN FILA */
+.product-slides { display: flex; transition: transform 0.4s ease-in-out; height: 100%; width: 100%; }
+.product-slides img { min-width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
+
+.btn-mini-slider { 
+    position: absolute; top: 50%; transform: translateY(-50%); 
+    background: rgba(255,255,255,0.8); border: none; border-radius: 50%; 
+    width: 30px; height: 30px; cursor: pointer; z-index: 9999; color: var(--naranja);
+}
+.prev-btn { left: 5px; } .next-btn { right: 5px; }
+
+.product-dots { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; }
+.dot { width: 7px; height: 7px; background: rgba(0,0,0,0.2); border-radius: 50%; }
+.dot.active { background: var(--naranja); transform: scale(1.2); }
+
+/* ESTILOS MODAL ZOOM */
+.modal-overlay { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; }
+.modal-img-container { width: 80%; height: 80%; display: flex; justify-content: center; align-items: center; }
+.modal-content { 
+    width: 80vw;      /* Ocupa el 80% del ancho de la pantalla */
+    height: 80vh;     /* Ocupa el 80% del alto de la pantalla */
+    object-fit: contain; 
+    border-radius: 10px; 
+    background-color: black; /* Opcional: llena los espacios vacíos si la foto es de otra proporción */
+}
+.close-modal { position: absolute; top: 20px; right: 30px; color: white; font-size: 50px; cursor: pointer; }
+.btn-modal-nav { position: absolute; top: 50%; background: none; border: none; color: white; font-size: 3.5rem; cursor: pointer; padding: 20px; z-index: 3100; }
+.btn-modal-nav.prev { left: 20px; } .btn-modal-nav.next { right: 20px; }
+
+/* OTROS ELEMENTOS */
+.price { color: var(--naranja); font-weight: 700; display: block; margin: 10px 0; font-size: 1.2rem; }
+.btn-rs { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 25px; text-decoration: none; color: white; font-weight: 600; margin: 5px; }
+.bg-ws { background: #25d366; } .bg-ig { background: #e1306c; }
+
+.slider-container { margin: 20px 5%; border-radius: 20px; height: 300px; overflow: hidden; position: relative; }
+.slider { display: flex; height: 100%; transition: 0.6s; }
+.slide { min-width: 33.333%; height: 100%; background-size: cover; background-position: center; border: 4px solid var(--crema); border-radius: 25px; }
+.btn-nav-slider { position: absolute; top: 50%; transform: translateY(-50%); background: var(--naranja); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; z-index: 20; }
+.left { left: 10px; } .right { right: 10px; }
+
+.submenu-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; }
+.burbuja { display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 110px; transition: 0.3s; }
+.burbuja-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--naranja); object-fit: cover; margin-bottom: 5px; }
+.burbuja:hover { transform: scale(1.05); }
+
+.contacto-container { display: flex; flex-wrap: wrap; background: white; border-radius: 25px; overflow: hidden; margin: 20px 5%; }
+.contacto-info { 
+    flex: 1; 
+    min-width: 300px; 
+    padding: 40px; 
+    text-align: center; 
+    position: relative; 
+    display: flex; /* Centramos el contenido */
+    align-items: center;
+    justify-content: center;
+}
+
+.decoracion-contacto { 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 70%; 
+    opacity: 0.8; 
+    z-index: 1; /* Capa de fondo */
+    pointer-events: none; 
+}
+
+.info-content { 
+    position: relative; 
+    z-index: 2; /* Capa del frente */
+    background: rgba(255, 253, 250, 0.8); /* Fondo crema suave para legibilidad */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+.contacto-mapa { flex: 1; min-width: 300px; height: 400px; }
+
+
+.btn-volver { background: white; color: var(--naranja); border: 2px solid var(--naranja); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: 600; margin: 10px 5%; }
+
+@media (max-width: 768px) {
+    /* Forzamos que el contenedor principal apile los elementos */
+    .contacto-container {
+        display: flex;
+        flex-direction: column !important; /* Uno debajo del otro */
+        height: auto;
+    }
+
+    /* La info de contacto ahora tiene su propio espacio real */
+    .contacto-info {
+        flex: none;
+        width: 100%;
+        min-height: 350px; /* Espacio suficiente para que el texto respire */
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Ajustamos la imagen para que no flote sobre el mapa */
+    .decoracion-contacto {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.4; /* La hacemos más suave para que el texto se lea mejor */
+    }
+
+    /* El mapa ahora se queda abajo, sin nada que lo tape */
+    .contacto-mapa {
+        flex: none;
+        width: 100%;
+        height: 300px;
+        position: relative; /* Asegura que tenga su propia capa */
+        z-index: 5; 
+    }
+}
+    /* El título de la marca se achica un poco para que no tape todo */
+    .brand-title { font-size: 20px; }
+
+    /* El buscador ocupa el 100% del ancho disponible */
+    .search-container { max-width: 100%; width: 100%; }
+
+    /* El menú de navegación ahora permite scroll lateral si hay muchas opciones */
+    .nav-menu ul {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 10px 15px;
+        gap: 20px;
+        -webkit-overflow-scrolling: touch; /* Scroll suave en iPhone */
+    }
+    
+    .nav-menu ul li { white-space: nowrap; } /* Evita que el texto se corte */
