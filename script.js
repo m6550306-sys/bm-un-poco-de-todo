@@ -13,17 +13,25 @@ const subcategorias = {
         { nombre: 'Parlantes', slug: 'Parlante', foto: 'fotos/categoria-parlantes.webp' },
         { nombre: 'Auriculares', slug: 'Auricular', foto: 'fotos/categoria-auriculares.webp' },
         { nombre: 'Humidificadores', slug: 'Humidificador', foto: 'fotos/categoria-humidificador.webp' },
-        { nombre: 'Cargadores/pendrives', slug: 'Cargador', foto: 'fotos/categoria-cargador.webp' }
+        { nombre: 'Accesorios de celular/pendrive', slug: 'Cargador', foto: 'fotos/categoria-cargador.webp' }
     ],
  'Juguetes': [
-       // <-- aca iria codigo nuevo caundo tenga los productos
+       
+    { nombre: 'accesorios para el Agua', slug: 'Agua', foto: 'fotos/categoria-agua.webp' }
+
+
     ], // <-- Coma muy importante
     'Decoración': [
         { 
             nombre: 'Iluminación', 
             slug: 'Lampara', 
             foto: 'fotos/categoria-iluminacion.webp' 
-        }
+        }, 
+       //  { 
+           // nombre: 'Mini electronico', 
+           // slug: 'Mini', 
+          //  foto: 'fotos/categoria-iluminacion.webp' 
+      //  }
     ],
 
      'Cuidado Personal': [
@@ -31,6 +39,12 @@ const subcategorias = {
             nombre: 'Belleza', 
             slug: 'Belleza', 
             foto: 'fotos/categoria-cuidado.webp' 
+        },
+
+          { 
+            nombre: 'Accesorios', 
+            slug: 'Accesorios', 
+            foto: 'fotos/categoria-accesorios.webp' 
         }
     ]
 }; // <-- ESTA LLAVE CIERRA TODO EL OBJETO SUBCATEGORIAS
