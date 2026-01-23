@@ -55,14 +55,89 @@ header { background: white; position: sticky; top: 0; z-index: 1000; box-shadow:
 .btn-rs { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 25px; text-decoration: none; color: white; font-weight: 600; margin: 5px; }
 .bg-ws { background: #25d366; } .bg-ig { background: #e1306c; }
 
-.slider-container { margin: 20px 5%; border-radius: 20px; height: 300px; overflow: hidden; position: relative; }
-.slider { display: flex; height: 100%; transition: 0.6s; }
-.slide { min-width: 33.333%; height: 100%; background-size: cover; background-position: center; border: 4px solid var(--crema); border-radius: 25px; }
-.btn-nav-slider { position: absolute; top: 50%; transform: translateY(-50%); background: var(--naranja); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; z-index: 20; }
-.left { left: 10px; } .right { right: 10px; }
+/* --- NUEVO ESTILO PARA EL CARRUSEL DE TARJETAS --- */
+.slider-container { 
+    margin: 20px 5%; 
+    border-radius: 20px; 
+    height: auto; /* Cambiado a auto para que crezca con la tarjeta */
+    overflow: hidden; 
+    position: relative; 
+    padding: 10px 0;
+}
 
+.slider { 
+    display: flex; 
+    height: 100%; 
+    transition: 0.6s ease-in-out; 
+}
+
+/* Cada "hoja" del carrusel ahora es un contenedor para la tarjeta */
+.slide { 
+    min-width: 33.333%; /* 3 productos por vez en PC */
+    display: flex;
+    justify-content: center;
+    padding: 0 10px;
+}
+
+/* Botones de navegación */
+.btn-nav-slider { 
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    background: var(--naranja); 
+    color: white; 
+    border: none; 
+    border-radius: 50%; 
+    width: 40px; 
+    height: 40px; 
+    cursor: pointer; 
+    z-index: 20; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.left { left: 5px; } 
+.right { right: 5px; }
+
+/* --- ADAPTACIÓN PARA CELULARES --- */
+@media (max-width: 768px) {
+    .slide { 
+        min-width: 100%; /* 1 solo producto por vez en celular */
+    }
+    .slider-container {
+        margin: 10px 2%;
+    }
+}
 .submenu-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; }
-.burbuja { display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 110px; transition: 0.3s; }
+.burbuja {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+    /* --- AGREGA ESTO --- */
+    min-width: 100px;      /* Ancho mínimo para que no se peguen */
+    max-width: 120px;      /* Ancho máximo para mantener uniformidad */
+    text-align: center;    /* Centra el texto largo */
+    padding: 5px;          /* Espacio interno para que el texto no toque los bordes */
+}
+
+.burbuja span {
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;    /* Un poquito más chico para que entre mejor */
+    color: var(--texto);
+    /* --- ESTO EVITA QUE SE JUNTEN --- */
+    word-wrap: break-word; /* Rompe la palabra si es muy larga */
+    line-height: 1.1;      /* Reduce el espacio entre líneas si el nombre usa dos renglones */
+}
+
+#submenu-burbujas {
+    display: flex;
+    justify-content: center;
+    gap: 20px;             /* Aumenta el espacio entre una burbuja y otra */
+    flex-wrap: wrap;       /* Si no entran en una fila, bajan automáticamente */
+    padding: 20px 5%;
+}
 .burbuja-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--naranja); object-fit: cover; margin-bottom: 5px; }
 .burbuja:hover { transform: scale(1.05); }
 
