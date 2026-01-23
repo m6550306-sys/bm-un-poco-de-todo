@@ -4,10 +4,10 @@ let currentSlide = 0;
 
 const subcategorias = {
     'Ropa': [
-        { nombre: 'Mujer', slug: 'Mujer', foto: 'fotos/mujer.jpg' },
-        { nombre: 'Hombre', slug: 'Hombre', foto: 'fotos/hombre.jpg' },
-        { nombre: 'Nena', slug: 'Nena', foto: 'fotos/nena.jpg' },
-        { nombre: 'Nene', slug: 'Nene', foto: 'fotos/nene.jpg' }
+        //{ nombre: 'Mujer', slug: 'Mujer', foto: 'fotos/mujer.jpg' },
+       // { nombre: 'Hombre', slug: 'Hombre', foto: 'fotos/hombre.jpg' },
+       // { nombre: 'Nena', slug: 'Nena', foto: 'fotos/nena.jpg' },
+       // { nombre: 'Nene', slug: 'Nene', foto: 'fotos/nene.jpg' }
     ],
     'Electrónica': [
         { nombre: 'Parlantes', slug: 'Parlante', foto: 'fotos/categoria-parlantes.webp' },
@@ -16,14 +16,21 @@ const subcategorias = {
         { nombre: 'Cargadores/pendrives', slug: 'Cargador', foto: 'fotos/categoria-cargador.webp' }
     ],
  'Juguetes': [
-        { nombre: 'Bebés', slug: '6 meses', foto: 'fotos/bebes.jpg' },
-        { nombre: 'Niños', slug: '5 años', foto: 'fotos/ninos.jpg' }
+       // <-- aca iria codigo nuevo caundo tenga los productos
     ], // <-- Coma muy importante
     'Decoración': [
         { 
             nombre: 'Iluminación', 
             slug: 'Lampara', 
             foto: 'fotos/categoria-iluminacion.webp' 
+        }
+    ],
+
+     'Cuidado Personal': [
+        { 
+            nombre: 'Belleza', 
+            slug: 'Belleza', 
+            foto: 'fotos/categoria-cuidado.webp' 
         }
     ]
 }; // <-- ESTA LLAVE CIERRA TODO EL OBJETO SUBCATEGORIAS
@@ -157,17 +164,30 @@ function cambiarSeccion(cat) {
         const navLink = document.querySelector(`[data-categoria="${cat}"]`);
         if (navLink) navLink.classList.add('active');
 
-        if (subcategorias[cat]) {
+       if (subcategorias[cat]) {
             submenu.style.display = 'flex';
             grid.innerHTML = '';
             document.getElementById('titulo-categoria').innerText = cat;
-            submenu.innerHTML = subcategorias[cat].map(sub => `
-                <div class="burbuja" onclick="filtrarPorSubcategoria('${cat}', '${sub.slug}', '${sub.nombre}')">
-                    <img src="${sub.foto}" class="burbuja-img" onerror="this.src='fotos/mi-logo.jpeg'">
-                    <span>${sub.nombre}</span>
-                </div>
-            `).join('');
-        } else {
+
+            // Nueva lógica: Si la lista está vacía []
+            if (subcategorias[cat].length === 0) {
+                submenu.innerHTML = `
+                    <div style="width: 100%; text-align: center; padding: 40px;">
+                        <i class="fas fa-clock" style="font-size: 2.5rem; color: var(--naranja); margin-bottom: 15px; display: block;"></i>
+                        <h3 style="color: var(--texto);">Próximamente productos de ${cat}</h3>
+                        <p style="color: #888; margin-top: 10px;">¡Estamos trabajando en esta sección!</p>
+                    </div>`;
+            } else {
+                // Si tiene datos, mostramos las burbujas
+                submenu.innerHTML = subcategorias[cat].map(sub => `
+                    <div class="burbuja" onclick="filtrarPorSubcategoria('${cat}', '${sub.slug}', '${sub.nombre}')">
+                        <img src="${sub.foto}" class="burbuja-img" onerror="this.src='fotos/mi-logo.jpeg'">
+                        <span>${sub.nombre}</span>
+                    </div>
+                `).join('');
+            }
+        }
+         else {
             submenu.style.display = 'none';
             document.getElementById('titulo-categoria').innerText = cat;
             renderizarGrid(productosBase.filter(p => p.categoria.toLowerCase().includes(cat.toLowerCase())));
