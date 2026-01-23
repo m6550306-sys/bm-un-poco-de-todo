@@ -10,16 +10,23 @@ const subcategorias = {
         { nombre: 'Nene', slug: 'Nene', foto: 'fotos/nene.jpg' }
     ],
     'Electrónica': [
-        { nombre: 'Parlantes', slug: 'Parlante', foto: 'fotos/parlantes.jpg' },
-        { nombre: 'Auriculares', slug: 'Auricular', foto: 'fotos/auriculares.jpg' },
-        { nombre: 'Humidificadores', slug: 'Humidificador', foto: 'fotos/humidificadores.jpg' } // <-- Agrega esta línea
+        { nombre: 'Parlantes', slug: 'Parlante', foto: 'fotos/categoria-parlantes.webp' },
+        { nombre: 'Auriculares', slug: 'Auricular', foto: 'fotos/categoria-auriculares.webp' },
+        { nombre: 'Humidificadores', slug: 'Humidificador', foto: 'fotos/categoria-humidificador.webp' },
+        { nombre: 'Cargadores/pendrives', slug: 'Cargador', foto: 'fotos/categoria-cargador.webp' }
     ],
-    'Juguetes': [
+ 'Juguetes': [
         { nombre: 'Bebés', slug: '6 meses', foto: 'fotos/bebes.jpg' },
         { nombre: 'Niños', slug: '5 años', foto: 'fotos/ninos.jpg' }
+    ], // <-- Coma muy importante
+    'Decoración': [
+        { 
+            nombre: 'Iluminación', 
+            slug: 'Lampara', 
+            foto: 'fotos/categoria-iluminacion.webp' 
+        }
     ]
-};
-
+}; // <-- ESTA LLAVE CIERRA TODO EL OBJETO SUBCATEGORIAS
 async function cargarDatos() {
     try {
         const res = await fetch(URL_CSV);
@@ -28,19 +35,17 @@ async function cargarDatos() {
         console.log("Contenido crudo del CSV (primera fila):", csv.split('\n')[1]);
         
         const filas = csv.split('\n').slice(1);
-        productosBase = filas.map(f => {
-            // Probemos detectar el separador automáticamente de nuevo
-            const separador = f.includes(';') ? ';' : ',';
-            const c = f.split(separador);
-            return { 
-                nombre: c[0]?.trim() || '', 
-                categoria: c[1]?.trim() || '', 
-                precio: c[2]?.trim() || '', 
-                foto: c[3]?.trim() || '', 
-                etiqueta: c[4]?.trim() || '' 
-            };
-        }).filter(p => p.nombre !== '');
-        
+       productosBase = filas.map(f => {
+    // Esta línea es mágica: divide por coma o punto y coma automáticamente
+    const c = f.split(/[;,]/); 
+    return { 
+        nombre: (c[0] || '').trim(), 
+        categoria: (c[1] || '').trim(), 
+        precio: (c[2] || '').trim(), 
+        foto: (c[3] || '').trim(), 
+        etiqueta: (c[4] || '').trim() 
+    };
+}).filter(p => p.nombre !== '');
         console.log("Productos procesados:", productosBase);
         configurarCarrusel();
     } catch (e) { 
@@ -86,10 +91,10 @@ function renderizarGrid(lista) {
                 
                 <div class="product-slides" id="slides-${indexP}" data-index="0">
 ${fotos.map((f, i) => `
-    <img src="${f.trim()}" 
-         onclick="abrirModal(${indexP}, ${i})" 
-         style="min-width:100%; height:100%; object-fit:contain; cursor:pointer;" 
-         onerror="this.src='fotos/mi-logo.jpeg'">
+<img src="${f.trim()}" 
+     onclick="abrirModal('${f.trim()}', '${p.nombre}')" 
+     style="min-width:100%; height:100%; object-fit:contain; cursor:pointer;" 
+     onerror="this.src='fotos/mi-logo.jpeg'">
 `).join('')}
                 </div>
 
@@ -146,14 +151,9 @@ function cambiarSeccion(cat) {
         categ.style.display = 'none';
         document.querySelector('[data-categoria="inicio"]').classList.add('active');
     } else {
-        inicio.style.display = 'none';
-        categ.style.display = 'block';
-        btnVolver.innerHTML = '<i class="fas fa-arrow-left"></i> Volver al Inicio';
-        btnVolver.onclick = () => {
-            document.getElementById('input-buscador').value = '';
-            cambiarSeccion('inicio');
-        };
-
+        inicio.style.display = 'none'; // <-- Asegúrate de tener esta línea
+        categ.style.display = 'block'; // <-- Asegúrate de tener esta línea
+        
         const navLink = document.querySelector(`[data-categoria="${cat}"]`);
         if (navLink) navLink.classList.add('active');
 
@@ -172,8 +172,8 @@ function cambiarSeccion(cat) {
             document.getElementById('titulo-categoria').innerText = cat;
             renderizarGrid(productosBase.filter(p => p.categoria.toLowerCase().includes(cat.toLowerCase())));
         }
-    }
-}
+    } // <-- ESTA ES LA LLAVE QUE SEGURAMENTE TE FALTA PARA CERRAR EL ELSE
+} // <-- Y ESTA CIERRA LA FUNCIÓN COMPLETA
 
 function filtrarPorSubcategoria(catPadre, slug, nombreSub) {
     document.getElementById('submenu-burbujas').style.display = 'none';
@@ -182,35 +182,55 @@ function filtrarPorSubcategoria(catPadre, slug, nombreSub) {
     btnVolver.innerHTML = `<i class="fas fa-arrow-left"></i> Volver a ${catPadre}`;
     btnVolver.onclick = () => cambiarSeccion(catPadre);
 
-    const filtrados = productosBase.filter(p => 
-        p.categoria.toLowerCase().includes(catPadre.toLowerCase()) && 
-        (p.nombre.toLowerCase().includes(slug.toLowerCase()) || p.categoria.toLowerCase().includes(slug.toLowerCase()))
-    );
+    const filtrados = productosBase.filter(p => {
+        // Verifica si la categoría principal (Decoración) está presente
+        const coincidePadre = p.categoria.toLowerCase().includes(catPadre.toLowerCase());
+        
+        // Verifica si el slug (Lampara) está en el nombre O en la categoría
+        const coincideSlug = p.nombre.toLowerCase().includes(slug.toLowerCase()) || 
+                             p.categoria.toLowerCase().includes(slug.toLowerCase());
+                             
+        return coincidePadre && coincideSlug;
+    });
     renderizarGrid(filtrados);
 }
-
 function configurarCarrusel() {
     const sliderBox = document.getElementById('slider-box');
     const destacados = productosBase.filter(p => p.etiqueta.toLowerCase().includes('carrusel'));
     
     if (destacados.length === 0) return;
 
-    // Insertamos las fotos en el carrusel
-    sliderBox.innerHTML = destacados.map(p => `
-        <div class="slide" style="background-image: url('${obtenerUrlsFotos(p.foto)[0]}')"></div>
-    `).join('');
+    // Generamos el contenido usando la clase "slide" para que el CSS funcione correctamente
+    sliderBox.innerHTML = destacados.map((p, indexP) => {
+        const fotos = obtenerUrlsFotos(p.foto);
+        return `
+        <div class="slide">
+            <div class="product-card" style="width: 100%; margin: 10px; height: 95%;">
+                <div class="product-image-container" style="height: 180px;">
+                    <img src="${fotos[0]}" 
+                         onclick="abrirModal('${fotos[0]}', '${p.nombre}')" 
+                         style="width:100%; height:100%; object-fit:contain; cursor:pointer;"
+                         onerror="this.src='fotos/mi-logo.jpeg'">
+                </div>
+                <h3 style="font-size: 0.9rem;">${p.nombre}</h3>
+                <span class="price" style="font-size: 1rem;">$${p.precio}</span>
+                <a href="https://wa.me/5491136500552?text=Hola! Me interesa: ${encodeURIComponent(p.nombre)}" 
+                   target="_blank" class="btn-rs bg-ws" style="font-size: 0.7rem; width: 100%; justify-content: center; display: flex;">
+                   <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> Consultar
+                </a>
+            </div>
+        </div>
+        `;
+    }).join('');
 
-    // Lógica para ocultar/mostrar flechas
+    // Control de flechas de navegación
     const botonesNav = document.querySelectorAll('.btn-nav-slider');
     if (destacados.length <= 1) {
-        // Si hay 1 o 0 fotos, ocultamos las flechas
         botonesNav.forEach(boton => boton.style.display = 'none');
     } else {
-        // Si hay más de una, nos aseguramos de que se vean
         botonesNav.forEach(boton => boton.style.display = 'block');
     }
 }
-
 function moveSlide(step) {
     const slides = document.querySelectorAll('.slide');
     if (slides.length <= 1) return;
@@ -260,15 +280,24 @@ document.addEventListener('DOMContentLoaded', cargarDatos);
 let fotosModalActuales = [];
 let indiceModalActual = 0;
 
-window.abrirModal = function(indexProducto, indexFoto) {
-    const producto = productosBase[indexProducto];
-    fotosModalActuales = obtenerUrlsFotos(producto.foto);
-    indiceModalActual = indexFoto;
+window.abrirModal = function(urlFotoCompleta, nombreProducto) {
+    // Buscamos el producto por su nombre exacto en lugar de por su posición
+    const producto = productosBase.find(p => p.nombre === nombreProducto);
+    
+    if (producto) {
+        fotosModalActuales = obtenerUrlsFotos(producto.foto);
+        // Encontramos el índice de la foto actual dentro del array de sus fotos
+        // Usamos include para comparar solo el nombre del archivo
+        indiceModalActual = fotosModalActuales.findIndex(f => urlFotoCompleta.includes(f));
+        if (indiceModalActual === -1) indiceModalActual = 0;
+    } else {
+        fotosModalActuales = [urlFotoCompleta];
+        indiceModalActual = 0;
+    }
 
     document.getElementById('modal-imagen').style.display = 'flex';
-    document.getElementById('img-ampliada').src = fotosModalActuales[indiceModalActual];
+    document.getElementById('img-ampliada').src = urlFotoCompleta;
 
-    // Lógica para ocultar flechas si es una sola foto
     const btnPrev = document.getElementById('modal-prev');
     const btnNext = document.getElementById('modal-next');
 
