@@ -6,14 +6,6 @@
     <title>Buena Mandarina - Tienda Infantil</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css"><!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buena Mandarina - Tienda Infantil</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -95,83 +87,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-</head>
-<body>
-    <header>
-        <div class="top-bar">
-            <div class="logo-container">
-                <a href="#" data-categoria="inicio" style="text-decoration:none; display:flex; align-items:center; gap:10px;">
-                    <img src="fotos/mi-logo.jpeg" alt="Logo" class="main-logo">
-                    <h1 class="brand-title">Buena Mandarina</h1>
-                </a>
-            </div>
-            <div class="search-container">
-                <div class="search-box">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="input-buscador" placeholder="¿Qué estás buscando?">
-                </div>
-            </div>
-        </div>
-<nav class="nav-menu">
-    <ul>
-        <li><a href="#" class="active" data-categoria="inicio">Inicio</a></li>
-        <li><a href="#" data-categoria="Ropa">Ropa</a></li>
-        <li><a href="#" data-categoria="Electrónica">Electrónica</a></li>
-        <li><a href="#" data-categoria="Juguetes">Juguetes</a></li>
-        <li><a href="#" data-categoria="Decoración">Deco</a></li> 
-        <li><a href="#" data-categoria="Cuidado Personal">Cuidado Personal</a></li>
-    </ul> 
-</nav>
-    </header>
-
-    <main>
-        <section id="seccion-inicio">
-            <div class="slider-container">
-                <div class="slider" id="slider-box"></div>
-                <button onclick="moveSlide(-1)" class="btn-nav-slider left">❮</button>
-                <button onclick="moveSlide(1)" class="btn-nav-slider right">❯</button>
-            </div>
-            <section class="section-contacto-split">
-                <div class="contacto-container">
-                    <div class="contacto-info">
-                        <img src="fotos/fondo web.jpeg" class="decoracion-contacto" alt="Decoración">
-                        <div class="info-content">
-                            <h2 style="color:var(--naranja)">Buena Mandarina</h2>
-                            <p>Despertando sonrisas, creando recuerdos.</p>
-                            <p><i class="fas fa-map-marker-alt"></i> Cerrito 2308, Lomas de Zamora</p>
-                            <div style="margin-top:15px;">
-                                <a href="https://wa.me/5491136500552" target="_blank" class="btn-rs bg-ws"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                                <a href="https://www.instagram.com/buenamandarina22/" target="_blank" class="btn-rs bg-ig"><i class="fab fa-instagram"></i> Instagram</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contacto-mapa">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3278.1466459146034!2d-58.3888358!3d-34.7594954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccd5774a38753%3A0x6b49964f434b9d0!2sCerrito%202308%2C%20B1832%20Lomas%20de%20Zamora%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1705880000000!5m2!1ses!2sar" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                    </div>
-                </div>
-            </section>
-        </section>
-
-        <section id="seccion-categorias" style="display: none;">
-            <div class="contenedor-volver">
-                <button id="btn-volver" class="btn-volver"></button>
-            </div>
-            <h2 id="titulo-categoria" style="text-align:center; margin:20px;"></h2>
-            <div id="submenu-burbujas" class="submenu-container"></div>
-            <div id="product-grid-categoria" class="product-grid"></div>
-        </section>
-    </main>
-
-    <div id="modal-imagen" class="modal-overlay">
-        <span class="close-modal" onclick="cerrarModal()">×</span>
-        <button class="btn-modal-nav prev" id="modal-prev" onclick="cambiarFotoModal(-1)">❮</button>
-        <div class="modal-img-container">
-            <img class="modal-content" id="img-ampliada">
-        </div>
-        <button class="btn-modal-nav next" id="modal-next" onclick="cambiarFotoModal(1)">❯</button>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-
