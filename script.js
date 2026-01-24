@@ -45,8 +45,12 @@ const subcategorias = {
             nombre: 'Accesorios', 
             slug: 'Accesorios', 
             foto: 'fotos/categoria-accesorios.webp' 
-        }
-    ]
+        },
+    ],
+    'Novedades': [
+        { nombre: 'Ofertas', slug: 'Novedades', foto: 'fotos/categoria-novedades.webp' },
+    
+    ],
 }; // <-- ESTA LLAVE CIERRA TODO EL OBJETO SUBCATEGORIAS
 async function cargarDatos() {
     try {
