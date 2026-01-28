@@ -51,6 +51,13 @@ const subcategorias = {
         { nombre: 'Ofertas', slug: 'Novedades', foto: 'fotos/categoria-novedades.webp' },
     
     ],
+
+        'Librería': [
+        { nombre: 'Librería', slug: 'Librería', foto: 'fotos/categoria-libreria.webp' },
+    
+    ],
+
+    
 }; // <-- ESTA LLAVE CIERRA TODO EL OBJETO SUBCATEGORIAS
 async function cargarDatos() {
     try {
