@@ -5,7 +5,7 @@ let currentSlide = 0;
 const subcategorias = {
     'Ropa': [
         //{ nombre: 'Mujer', slug: 'Mujer', foto: 'fotos/mujer.jpg' },
-       // { nombre: 'Hombre', slug: 'Hombre', foto: 'fotos/hombre.jpg' },
+       // { nombre: 'Hombre', slug: 'Hombre', foto: 'fotos/hombre.jpg' }
        // { nombre: 'Nena', slug: 'Nena', foto: 'fotos/nena.jpg' },
        // { nombre: 'Nene', slug: 'Nene', foto: 'fotos/nene.jpg' }
     ],
@@ -27,11 +27,11 @@ const subcategorias = {
             slug: 'Lampara', 
             foto: 'fotos/categoria-iluminacion.webp' 
         }, 
-       //  { 
-           // nombre: 'Mini electronico', 
-           // slug: 'Mini', 
-          //  foto: 'fotos/categoria-iluminacion.webp' 
-      //  }
+         { 
+           nombre: 'Bazar', 
+           slug: 'Bazar', 
+           foto: 'fotos/categoria-bazar.webp' 
+       }
     ],
 
      'Cuidado Personal': [
